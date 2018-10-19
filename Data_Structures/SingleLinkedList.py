@@ -28,6 +28,7 @@ class LinkedList:
             newNode.next = self.head
             self.head = newNode
 
+    # InsertByIndex = Inserts given element at the specified index
     def insert_by_index(self, index, newNode):
         if index == 0:  # if index is 0 then change head
             newNode.next = self.head
@@ -49,6 +50,7 @@ class LinkedList:
             return "Error no index found"
         return
 
+    # Prints the list item from head to tail
     def printList(self):
         if self.head is None:
             print("list is empty")
@@ -143,6 +145,7 @@ class LinkedList:
         print("no it's not empty")
         return False
 
+    # returns the size of the list
     def size(self):
         currNode = self.head
         i = 0
@@ -151,7 +154,7 @@ class LinkedList:
             currNode = currNode.next
         return i
 
-    # Reverse a linked list
+    # Reverse a linked list in iterative way
     def reverseList(self):
         if self.head == None:
             return
@@ -170,6 +173,7 @@ class LinkedList:
 
         self.head = prevNode
 
+    # Reverse a linked list in recursive way
     def reverseRecurse(self):
         self.reverseRecurseHelper(self.head)
 
@@ -183,6 +187,7 @@ class LinkedList:
         temp.next = node
         node.next = None
 
+    # Finds the middle element of the linked list
     def findMiddle(self):
         fast_node, slow_node = self.head, self.head
 
@@ -195,8 +200,22 @@ class LinkedList:
 
         return "Nothing in the list"
 
+    # Determine whether there is loop in the list (list revisiting already traversed node)
+    def detect_loop(self):
+        s = set()
+        currNode = self.head
+        while currNode:
+            if currNode in s:
+                return True
 
-# Some testing
+            s.add(currNode)
+            print(s)
+            currNode = currNode.next
+
+        return False
+
+
+# Test 1
 print("Example1:")
 SLL = LinkedList()
 SLL.insert_head(Node(4))
@@ -232,7 +251,7 @@ print(SLL.delete_value(1))
 print("--print list--")
 SLL.printList()
 
-
+# Test 2
 print("Example2:")
 # Check for empt list
 test = LinkedList()
@@ -244,7 +263,6 @@ print(test.search(5))
 
 print("---Is empty---")
 print(test.isEmpty())
-
 
 test.insert_end(Node(1))
 test.insert_end(Node(2))
@@ -286,7 +304,9 @@ print("---checking the middle number--")
 print(test.findMiddle())
 
 # Test 3:
+print("Example3:")
 emptylist = LinkedList()
+
 print("---print list---")
 emptylist.printList()
 
@@ -305,3 +325,14 @@ emptylist.printList()
 # Detect loop in a linked list
 # Return Nth node from the end in a linked list
 # Remove duplicates from a linked list
+
+# test 4
+print("Example4:")
+loop = LinkedList()
+loop.insert_end(Node(4))
+loop.insert_end(Node(5))
+loop.insert_end(Node(6))
+
+# make it loop: 6 points to 5
+loop.head.next.next.next = loop.head.next
+print("there is a loop:", loop.detect_loop())
