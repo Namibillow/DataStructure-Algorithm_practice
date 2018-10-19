@@ -228,6 +228,19 @@ class LinkedList:
         print("Out of range")
         return
 
+    # Remove the duplicated data takes O(n^2)
+    def remove_dups(self):
+        outerNode, innerNode = self.head, None
+
+        while(outerNode is not None and outerNode.next is not None):
+            innerNode = outerNode
+            while(innerNode.next is not None):
+                if outerNode.data == innerNode.next.data:
+                    innerNode.next = innerNode.next.next
+                else:
+                    innerNode = innerNode.next
+
+            outerNode = outerNode.next
 
 # Test 1
 print("Example1:")
@@ -235,6 +248,8 @@ SLL = LinkedList()
 SLL.insert_head(Node(4))
 SLL.insert_head(Node(5))
 SLL.insert_head(Node(6))
+SLL.insert_head(Node(7))
+SLL.insert_head(Node(7))
 SLL.insert_head(Node(7))
 SLL.insert_head(Node(8))
 SLL.insert_end(Node(1))
@@ -248,6 +263,11 @@ print("--nth node from end--")
 SLL.nth_from_end(3) #should display 1
 SLL.nth_from_end(1) #should be 3
 
+print("--print list--")
+SLL.printList()
+
+print("--removing duplicated stuff--")
+SLL.remove_dups()
 
 print("---Searching for 4--")
 print(SLL.search(4))  # Return true
