@@ -214,6 +214,20 @@ class LinkedList:
 
         return False
 
+    # n’th node from the end of a Linked List where at last index starts as 1
+    def nth_from_end(self, index):
+        i = self.size()
+        currNode = self.head
+        while currNode and i is not 0:
+            if (index == i):
+                print(currNode.data)
+                return
+            i -= 1
+            currNode = currNode.next
+
+        print("Out of range")
+        return
+
 
 # Test 1
 print("Example1:")
@@ -229,6 +243,11 @@ SLL.insert_end(Node(3))
 
 print("---Is empty---")
 SLL.isEmpty()
+
+print("--nth node from end--")
+SLL.nth_from_end(3) #should display 1
+SLL.nth_from_end(1) #should be 3
+
 
 print("---Searching for 4--")
 print(SLL.search(4))  # Return true
@@ -274,6 +293,7 @@ test.insert_end(Node(7))
 test.insert_end(Node(8))
 test.insert_end(Node(9))
 test.insert_end(Node(10))
+test.insert_end(Node(11))
 # print(test.delete_at_tail())
 # print(test.delete_at_tail())
 # print(test.delete_at_tail())
@@ -322,17 +342,20 @@ emptylist.insert_by_index(0, Node(5))
 print("---print list---")
 emptylist.printList()
 
+print("--nth node from end--")
+emptylist.nth_from_end(3)
 # Detect loop in a linked list
 # Return Nth node from the end in a linked list
 # Remove duplicates from a linked list
 
 # test 4
 print("Example4:")
-loop = LinkedList()
-loop.insert_end(Node(4))
-loop.insert_end(Node(5))
-loop.insert_end(Node(6))
-
+a = LinkedList()
+a.insert_end(Node(4))
+a.insert_end(Node(5))
+a.insert_end(Node(6))
+print("---print list---")
+a.printList()
 # make it loop: 6 points to 5
-loop.head.next.next.next = loop.head.next
-print("there is a loop:", loop.detect_loop())
+a.head.next.next.next = a.head.next
+print("there is a loop:", a.detect_loop())
