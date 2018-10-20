@@ -242,6 +242,51 @@ class LinkedList:
 
             outerNode = outerNode.next
 
+# merge two sorted list into a one list
+
+
+def merge_lists(list1, list2, merged_list):
+    curr1 = list1.head
+    curr2 = list2.head
+    # O(n)
+    while True:
+        if curr1 is None:
+            merge_lists.insert_end(curr2)
+            return
+
+        if curr2 is None:
+            merge_lists.insert_end(curr1)
+            return
+
+        if curr1.data < curr2.data:
+            curr1Next = curr1.next
+            curr1.next = None
+            merged_list.insert_end(curr1)
+            curr1 = curr1Next
+        else:
+            curr2Next = curr2.next
+            curr2.next = None
+            merge_lists.insert_end(curr2)
+            curr2 = curr2Next
+
+
+# cleaner merge list
+def merge_lists_two(List1, List2):
+    new_head = tail = LinkedList()
+
+    while List1 and List2:
+        if List1.data < List2.data:
+            tail.next, List1 = List1, List1.next
+        else:
+            tail.next, List2 = List2, List2.next
+
+        tail = tail.next
+
+    tail.next = List1 or List2
+    return new_head.next
+
+
+
 # Test 1
 print("Example1:")
 SLL = LinkedList()
@@ -260,8 +305,8 @@ print("---Is empty---")
 SLL.isEmpty()
 
 print("--nth node from end--")
-SLL.nth_from_end(3) #should display 1
-SLL.nth_from_end(1) #should be 3
+SLL.nth_from_end(3)  # should display 1
+SLL.nth_from_end(1)  # should be 3
 
 print("--print list--")
 SLL.printList()
