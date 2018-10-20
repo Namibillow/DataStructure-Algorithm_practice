@@ -36,7 +36,8 @@ class LinkedList:
                 print(currNode.data)
                 currNode = currNode.next
 
-
+# Space complexity: O(1) since no space dunamically allocated
+# Run time: O(n+m)
 def merge_list(List1, List2):
     new_head = tail = LinkedList()
 
