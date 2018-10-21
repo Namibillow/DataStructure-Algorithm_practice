@@ -13,14 +13,15 @@ Implementing the Data Structures and Algorithm and its Interview Questions
 <h1> Contents </h1>
 
 <h2> /Data_Structure </h2>
-    <h4> Linked Lists </h4>
-    <ul>
-        <li>Doubly Linked List</li>
-        <li>Single Linked List</li>
-    </ul>
-    <p>
-        Example Quetsions I've implemented:
-            1) Let m be a positve integer and L a sorted singly linked list of integers. For each integer k, if k appears more than m times in L, remove all nodes from L containing K.
+<h4> Linked Lists </h4>
+<ul>
+    <li>Doubly Linked List</li>
+    <li>Single Linked List</li>
+</ul>
 
-            2) Merge two sorted lists
-    </p>
+<h6>Example Quetsions I've implemented:</h6>
+<p>
+    1) Let m be a positve integer and L a sorted singly linked list of integers. For each integer k, if k appears more than m times in L, remove all nodes from L containing K.
+
+    2) Merge two sorted lists
+</p>
