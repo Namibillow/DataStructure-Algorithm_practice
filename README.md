@@ -4,8 +4,8 @@ Implementing the Data Structures and Algorithm and its Interview Questions
 - Used books and resources
     • Elements of programming interviews in Python
     • Cracking the Code Interview
-    • (50+ Data Structure and Algorithms Interview Questions for Programmers)[https://hackernoon.com/50-data-structure-and-algorithms-interview-questions-for-programmers-b4b1ac61f5b0]
-    • (The top data structures you should know for your next coding interview)[https://medium.freecodecamp.org/the-top-data-structures-you-should-know-for-your-next-coding-interview-36af0831f5e3]
+    • [50+ Data Structure and Algorithms Interview Questions for Programmers](https://hackernoon.com/50-data-structure-and-algorithms-interview-questions-for-programmers-b4b1ac61f5b0)
+    • [The top data structures you should know for your next coding interview](https://medium.freecodecamp.org/the-top-data-structures-you-should-know-for-your-next-coding-interview-36af0831f5e3)
 
 
 
