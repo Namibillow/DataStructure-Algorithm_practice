@@ -1,7 +1,7 @@
 
 <h1>Implementing the Data Structures and Algorithm and its Interview Questions</h1>
 
-<p>I am doing this to practice my coding skills in Python and refresh and understand how Data Structures and Algorithm works in order to prepare coding interviews. Appriciate if you could help me find bugs in the code.</p>
+<p>I am doing this to practice my coding skills in Python and refresh and understand how Data Structures and Algorithm works in order to prepare coding interviews. Appriciate if you could help me find bugs in the code. So for each Data Structures, I implemented simple tasks such as search, insert, delete, to interview questions</p>
 
 <h4>Used books and resources</h4>
 <ul><li>Elements of programming interviews in Python </li>
@@ -23,7 +23,8 @@
 </ul>
 
 <h6>Example Quetsions I've implemented:</h6>
-    <ul><li> Let m be a positve integer and L a sorted singly linked list of integers. For each integer k, if k appears more than m times in L, remove all nodes from L containing K.</li>
+    <ul>
+        <li> Let m be a positve integer and L a sorted singly linked list of integers. For each integer k, if k appears more than m times in L, remove all nodes from L containing K.</li>
         <li>Merge two sorted lists</li>
         <li>add two lists where the most significant digit coming first. </li>
         <li>change the order by pivot k where numbers < k goes before the k and numbers > k goes after k</li>
