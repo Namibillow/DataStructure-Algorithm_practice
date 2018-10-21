@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, data):
+    def __init__(self, data=0):
         self.data = data
         self.next = None
 
@@ -253,12 +253,14 @@ class LinkedList:
         while curr:
             num += 1
             curr = curr.next
+            if num >= k:
+                break
 
         curr = head
-        while(curr is not None and count < k):
-            if num < k:
-                return curr
+        if num < k:
+            return curr
 
+        while(curr is not None and count < k):
             next = curr.next
             curr.next = prev
             prev = curr
@@ -270,6 +272,63 @@ class LinkedList:
 
         return prev
 
+    def reverseKGroup(self, head, k):
+        dummy = Node()
+        dummy.next = head
+        pre = dummy
+        while head:
+            cur = head
+            cnt = 0
+            while cur and cnt != k:
+                cur = cur.next
+                cnt += 1
+            if cnt != k:
+                break
+            then = head.next
+            for i in range(k - 1):
+                head.next = then.next
+                then.next = pre.next
+                pre.next = then
+                then = head.next
+            pre = head
+            head = head.next
+        return dummy.next
+
+    # NEED TO FIX #
+    def remove_n_occurence(self, m):
+
+        dummy = Node()
+        dummy.next = self.head
+
+        prev = dummy
+        curr = self.head
+
+        if m == 1:
+            self.head = None
+            return
+
+        while curr is not None:
+            count = 1
+            while curr.next is not None and prev.next.data == curr.next.data:
+                print("this is ", curr.next.data)
+                count += 1
+                curr = curr.next
+
+            print("count", count)
+            if prev.next is curr:
+                print("current ain't walking")
+                prev = prev.next
+
+            elif count >= m:
+                print("removind!")
+                prev.next = curr.next
+                # print(curr.next.data)
+
+            else:  # if nothing got deleted than
+                prev = curr
+
+            curr = curr.next
+        return dummy.next
 
 # merge two sorted list into a one list
 
@@ -302,7 +361,7 @@ def merge_lists(list1, list2, merged_list):
 # cleaner merge list
 def merge_lists_two(List1, List2):
     new_head = tail = LinkedList()
-
+    List1, List2 = List1.head, List2.head
     while List1 and List2:
         if List1.data < List2.data:
             tail.next, List1 = List1, List1.next
@@ -453,13 +512,55 @@ def merge_lists_two(List1, List2):
 # print("there is a loop:", a.detect_loop())
 
 
-test = LinkedList()
-test.insert_end(Node(1))
-test.insert_end(Node(2))
-test.insert_end(Node(3))
+# test = LinkedList()
+# test.insert_end(Node(1))
+# test.insert_end(Node(2))
+# test.insert_end(Node(3))
 # test.insert_end(Node(4))
 # test.insert_end(Node(5))
 # test.insert_end(Node(6))
+# test.insert_end(Node(7))
+# test.insert_end(Node(8))
+# test.insert_end(Node(9))
+# test.insert_end(Node(10))
 
-test.head = test.reverse_k_nodes(5, test.head)
-test.printList()
+# # test.head = test.reverseKGroup(test.head, 3)
+# # test.head = test.reverse_k_nodes(3, test.head)
+# test.printList()
+
+# print("here")
+# test2 = LinkedList()
+# test2.insert_end(Node(2))
+# test2.insert_end(Node(200))
+
+# test3 = LinkedList()
+# test3.head = merge_lists_two(test, test2)
+
+# test3.printList()
+# print("here")
+test4 = LinkedList()
+test4.insert_end(Node(1))
+test4.insert_end(Node(1))
+test4.insert_end(Node(1))
+test4.insert_end(Node(2))
+test4.insert_end(Node(2))
+test4.insert_end(Node(2))
+test4.insert_end(Node(2))
+test4.insert_end(Node(3))
+test4.insert_end(Node(3))
+test4.insert_end(Node(3))
+test4.insert_end(Node(3))
+test4.insert_end(Node(3))
+test4.insert_end(Node(3))
+test4.insert_end(Node(3))
+test4.insert_end(Node(10))
+test4.insert_end(Node(10))
+test4.insert_end(Node(10))
+
+print("Testing")
+h = test4.remove_n_occurence(3)
+print("printing")
+while h:
+    print(h.data)
+    h = h.next
+# test4.printList() can't be called if all item was removed
