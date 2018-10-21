@@ -272,6 +272,7 @@ class LinkedList:
 
         return prev
 
+    # Same as previous but different implementation
     def reverseKGroup(self, head, k):
         dummy = Node()
         dummy.next = head
@@ -294,7 +295,7 @@ class LinkedList:
             head = head.next
         return dummy.next
 
-    # NEED TO FIX #
+    # given non negative integer m, if each k number in List occurs more than m times than delete
     def remove_n_occurence(self, m):
 
         dummy = Node()
@@ -372,6 +373,205 @@ def merge_lists_two(List1, List2):
 
     tail.next = List1 or List2
     return new_head.next
+
+# Takes O(n) because of counting total nodes
+
+
+def shift_by_k(L, k):
+    if not L:
+        return L
+
+    tail, n = L.head, 1
+
+    # Count total nodes and make tail points to original tail
+    while tail.next:
+        tail = tail.next
+        n += 1
+
+    # mod n by k since there is possibility of k > n
+    k %= n
+    if k == 0:
+        return L
+
+        # Make it cyclic by pointing tail.next to list's original head
+    tail.next = L.head
+    steps_to_new_head, new_tail = n - k, tail
+    while steps_to_new_head:
+        steps_to_new_head -= 1
+        new_tail = new_tail.next
+
+    new_head = new_tail.next
+    new_tail.next = None
+    return new_head
+
+# Even-odd merge starting index as 0 as even
+# L is pointing at the head of List L
+
+
+def even_odd_merge(L):
+    L = L.head
+    if not L:
+        return L
+
+    even_dummy_head, odd_dummy_head = Node(), Node()
+    tails, turn = [even_dummy_head, odd_dummy_head], 0
+
+    while L:
+        tails[turn].next = L
+        L = L.next
+        tails[turn] = tails[turn].next
+        turn ^= 1
+
+    tails[1].next = None
+    tails[0].next = odd_dummy_head.next
+    return even_dummy_head.next
+
+# Hint: find middle node of the list
+# reverse the second half
+# check if it's equal
+# Empty or only 1 node list returns true
+
+
+def is_palindrom(L):
+    slow = fast = L.head
+    while fast and fast.next:
+        fast, slow = fast.next.next, slow.next
+
+    second_half_iter = LinkedList()
+    second_half_iter.insert_end(slow)
+    second_half_iter.reverseList()
+
+    first_half_iter, second_half_iter = L.head, second_half_iter.head
+    while second_half_iter and first_half_iter:
+        if second_half_iter.data != first_half_iter.data:
+            return False
+        second_half_iter, first_half_iter = second_half_iter.next, first_half_iter.next
+
+    return True
+
+# Given List and some number x (assume x is in the list), change the order of the list where nodes that are less than x is appended front of the x and vice versa
+
+
+def list_pivoting(L, x):
+    '''
+    Idea is splitting the list into three and combine them back
+    '''
+    L = L.head
+    less_head = less_iter = Node()
+    equal_head = equal_iter = Node()
+    greater_head = greater_iter = Node()
+
+    while L:
+        if L.data < x:
+            less_iter.next = L
+            less_iter = less_iter.next
+        elif L.data == x:
+            equal_iter.next = L
+            equal_iter = equal_iter.next
+        else:
+            greater_iter.next = L
+            greater_iter = greater_iter.next
+        L = L.next
+
+    greater_iter.next = None
+    equal_iter.next = greater_head.next
+    less_iter.next = equal_head.next
+    return less_head.next
+
+# Given two lists where MOST significant digit come first, add them
+# EX: L1=1->3->4, L2=2->2
+# then L3 = 134+ 22 = 156 => 1->5->6
+# assume each number in the node is 0-9 (one digit)
+# takes O(n+m) time complexity with O(max(n,m)) space where n and m is the size of the lists
+def add_two_numbers(L1, L2):
+    L1_size, L2_size = 0, 0
+    # If one of the list is empty then return other
+    if L1 is None:
+        return L2
+    if L2 is None:
+        return L1
+
+    L1_head = L1.head
+    L2_head = L2.head
+
+    # count the size of the each list
+    while L1_head:
+        L1_size += 1
+        L1_head = L1_head.next
+
+    while L2_head:
+        L2_size += 1
+        L2_head = L2_head.next
+
+    # make the size equal
+    if L1_size > L2_size:
+        diff = L1_size - L2_size
+        while diff:
+            zero = Node()
+            zero.next = L2.head
+            L2.head = zero
+            diff -= 1
+
+    elif L2_size > L1_size:
+        diff = L2_size - L1_size
+        while diff:
+            zero = Node()
+            zero.next = L1.head
+            L1.head = zero
+            diff -= 1
+
+    result, carry = add_two_numbers_helper(L1.head, L2.head, 0)
+    if carry == 1:
+        # print("Carry is ", carry)
+        add_one = Node(1)
+        add_one.next = result
+        return add_one
+    return result
+
+
+def add_two_numbers_helper(L1_head, L2_head, carry):
+    '''
+    Recursively do the sum from least significant digit and return the list and carry
+    '''
+    if L1_head is None:
+        return None, 0
+    total = 0
+
+    dummy = Node()
+    dummy.next, prev_carry = add_two_numbers_helper(L1_head.next, L2_head.next, carry)
+
+    total = L1_head.data + L2_head.data + prev_carry
+    carry = total // 10
+    total = total % 10
+
+    dummy.data = total
+
+    return dummy, carry
+
+SLL = LinkedList()
+SLL.insert_end(Node(0))
+# SLL.insert_end(Node(9))
+# SLL.insert_end(Node(9))
+
+test = LinkedList()
+test.insert_end(Node(2))
+# test.insert_end(Node(1))
+# test.insert_end(Node(3))
+
+dum = LinkedList()
+sum_result = add_two_numbers(test,SLL)
+dum.insert_end(sum_result)
+dum.printList()
+
+# Testing Palindrom
+# Pal = LinkedList()
+# Pal.insert_end(Node(1))
+# Pal.insert_end(Node(1))
+# Pal.insert_end(Node(3))
+# Pal.insert_end(Node(3))
+# Pal.insert_end(Node(2))
+# Pal.insert_end(Node(1))
+# print(is_palindrom(Pal))
 
     # Test 1
 # print("Example1:")
@@ -536,31 +736,49 @@ def merge_lists_two(List1, List2):
 # test3 = LinkedList()
 # test3.head = merge_lists_two(test, test2)
 
+
 # test3.printList()
 # print("here")
-test4 = LinkedList()
-test4.insert_end(Node(1))
-test4.insert_end(Node(1))
-test4.insert_end(Node(1))
-test4.insert_end(Node(2))
-test4.insert_end(Node(2))
-test4.insert_end(Node(2))
-test4.insert_end(Node(2))
-test4.insert_end(Node(3))
-test4.insert_end(Node(3))
-test4.insert_end(Node(3))
-test4.insert_end(Node(3))
-test4.insert_end(Node(3))
-test4.insert_end(Node(3))
-test4.insert_end(Node(3))
-test4.insert_end(Node(10))
-test4.insert_end(Node(10))
-test4.insert_end(Node(10))
+# test4 = LinkedList()
+# test4.insert_end(Node(1))
+# test4.insert_end(Node(1))
+# test4.insert_end(Node(1))
+# test4.insert_end(Node(2))
+# test4.insert_end(Node(2))
+# test4.insert_end(Node(2))
+# test4.insert_end(Node(2))
+# test4.insert_end(Node(3))
+# test4.insert_end(Node(3))
+# test4.insert_end(Node(3))
+# test4.insert_end(Node(3))
+# test4.insert_end(Node(3))
+# test4.insert_end(Node(3))
+# test4.insert_end(Node(3))
+# test4.insert_end(Node(10))
+# test4.insert_end(Node(10))
+# test4.insert_end(Node(10))
 
-print("Testing")
-h = test4.remove_n_occurence(3)
-print("printing")
-while h:
-    print(h.data)
-    h = h.next
+# print("Testing")
+# h = test4.remove_n_occurence(3)
+# print("printing")
+# while h:
+#     print(h.data)
+#     h = h.next
 # test4.printList() can't be called if all item was removed
+
+
+# test5 = LinkedList()
+# test5.insert_end(Node(0))
+# test5.insert_end(Node(1))
+# test5.insert_end(Node(2))
+# test5.insert_end(Node(3))
+# new_list = LinkedList()
+# print("testing shift")
+# new_list.insert_end(shift_by_k(test5, 2))
+# new_list.printList()
+
+#Comment out shift_by_k
+# print("testing odd_even")
+# nl = LinkedList()
+# nl.insert_end(even_odd_merge(test5))
+# nl.printList()
